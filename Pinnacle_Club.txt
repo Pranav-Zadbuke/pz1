@@ -1,0 +1,124 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Node {
+    int prn;
+    string name;
+    Node* next;
+};
+
+class PinnacleClub {
+private:
+    Node* head;
+
+public:
+    PinnacleClub() : head(nullptr) {}
+
+    void addMember(int prn, string name, bool isPresident = false, bool isSecretary = false) {
+        Node* newNode = new Node{prn, name, nullptr};
+        if (isPresident) {
+            newNode->next = head;
+            head = newNode;
+        } else if (isSecretary) {
+            if (!head) {
+                head = newNode;
+            } else {
+                Node* temp = head;
+                while (temp->next)
+                    temp = temp->next;
+                temp->next = newNode;
+            }
+        } else {
+            if (!head) {
+                head = newNode;
+            } else {
+                Node* temp = head;
+                while (temp->next && temp->next->next)
+                    temp = temp->next;
+                newNode->next = temp->next;
+                temp->next = newNode;
+            }
+        }
+    }
+
+    void deleteMember(int prn) {
+        if (!head) return;
+        if (head->prn == prn) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+        }
+        Node* temp = head;
+        while (temp->next && temp->next->prn != prn)
+            temp = temp->next;
+        if (temp->next) {
+            Node* toDelete = temp->next;
+            temp->next = temp->next->next;
+            delete toDelete;
+        }
+    }
+
+    int totalMembers() {
+        int count = 0;
+        Node* temp = head;
+        while (temp) {
+            count++;
+            temp = temp->next;
+        }
+        return count;
+    }
+
+    void displayMembers() {
+        Node* temp = head;
+        while (temp) {
+            cout << temp->prn << " - " << temp->name << endl;
+            temp = temp->next;
+        }
+    }
+
+    void concatenate(PinnacleClub& other) {
+        if (!head) {
+            head = other.head;
+        } else {
+            Node* temp = head;
+            while (temp->next)
+                temp = temp->next;
+            temp->next = other.head;
+        }
+        other.head = nullptr;
+    }
+};
+
+int main() {
+    PinnacleClub divA, divB;
+
+    divA.addMember(1, "PresidentA", true);
+    divA.addMember(101, "Member1");
+    divA.addMember(102, "Member2");
+    divA.addMember(2, "SecretaryA", false, true);
+
+    divB.addMember(3, "PresidentB", true);
+    divB.addMember(201, "Member3");
+    divB.addMember(202, "Member4");
+    divB.addMember(4, "SecretaryB", false, true);
+
+    cout << "Division A Members:" << endl;
+    divA.displayMembers();
+
+    cout << "Division B Members:" << endl;
+    divB.displayMembers();
+
+    divA.concatenate(divB);
+    cout << "After concatenation:" << endl;
+    divA.displayMembers();
+
+    cout << "Total Members in Division A: " << divA.totalMembers() << endl;
+
+    divA.deleteMember(101);
+    cout << "After deleting Member1:" << endl;
+    divA.displayMembers();
+
+    return 0;
+}

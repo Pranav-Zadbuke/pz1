@@ -1,0 +1,44 @@
+marks = [45, 78, 89, -1, 67, 89, -1, 78, 89]
+
+def average(marks):
+    total = 0
+    count = 0
+    for mark in marks:
+        if mark != -1:
+            total += mark
+            count += 1
+    return total / count
+
+def highest_score(marks):
+    highest = 0
+    for mark in marks:
+        if mark != -1 and mark > highest:
+            highest = mark
+    return highest
+
+def lowest_score(marks):
+    lowest = 100
+    for mark in marks:
+        if mark != -1 and mark < lowest:
+            lowest = mark
+    return lowest
+
+def count_absent(marks):
+    absent = 0
+    for mark in marks:
+        if mark == -1:
+            absent += 1
+    return absent
+
+def most_frequent(marks):
+    counts = {}
+    for mark in marks:
+        if mark != -1:
+            counts[mark] = counts.get(mark, 0) + 1
+    return max(counts, key=counts.get)
+
+print("Average Score:", average(marks))
+print("Highest Score:", highest_score(marks))
+print("Lowest Score:", lowest_score(marks))
+print("Count of Absent Students:", count_absent(marks))
+print("Mark with Highest Frequency:", most_frequent(marks))

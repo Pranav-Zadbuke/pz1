@@ -1,0 +1,15 @@
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+
+percentages = [85.5, 78.0, 92.3, 88.7, 76.4, 95.2, 89.1, 73.5]
+
+sorted_percentages = quick_sort(percentages)
+top_five_scores = sorted_percentages[-5:]
+
+print("Top five scores:", top_five_scores)

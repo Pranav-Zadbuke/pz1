@@ -1,0 +1,51 @@
+group_a = ["Shambhu", "Abhishek", "Pranav", "Roshan", "Shambhu"]  
+group_b = ["Pranav", "Aniket", "Sachin", "Shambhu", "Aniket"]   
+group_c = ["Jay", "Abhishek", "Aniket", "Sujal", "Jay"]    
+all_students = ["Shambhu", "Abhishek", "Pranav", "Roshan", "Aniket", "Sachin", "Jay", "Sujal", "Aditya"]
+
+def remove_duplicates(lst):
+    result = []
+    for item in lst:
+        if item not in result:
+            result.append(item)
+    return result
+
+group_a = remove_duplicates(group_a)
+group_b = remove_duplicates(group_b)
+group_c = remove_duplicates(group_c)
+all_students = remove_duplicates(all_students)
+
+# a) Students who play both cricket and badminton
+both_cricket_badminton = []
+for student in group_a:
+    if student in group_b:
+        both_cricket_badminton.append(student)
+
+print("a) Students who play both cricket and badminton:", both_cricket_badminton)
+
+# b) Students who play either cricket or badminton but not both
+either_cricket_badminton = []
+for student in group_a:
+    if student not in group_b:
+        either_cricket_badminton.append(student)
+for student in group_b:
+    if student not in group_a:
+        either_cricket_badminton.append(student)
+
+print("b) Students who play either cricket or badminton but not both:", either_cricket_badminton)
+
+# c) Number of students who play neither cricket nor badminton
+neither_cricket_badminton = []
+for student in all_students:
+    if student not in group_a and student not in group_b:
+        neither_cricket_badminton.append(student)
+
+print("c) Number of students who play neither cricket nor badminton:", len(neither_cricket_badminton))
+
+# d) Number of students who play cricket and football but not badminton
+cricket_football_not_badminton = []
+for student in group_a:
+    if student in group_c and student not in group_b:
+        cricket_football_not_badminton.append(student)
+
+print("d) Number of students who play cricket and football but not badminton:", len(cricket_football_not_badminton))

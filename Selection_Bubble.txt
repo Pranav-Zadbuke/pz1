@@ -1,0 +1,26 @@
+def selection_sort(arr):
+    for i in range(len(arr)):
+        min_index = i
+        for j in range(i + 1, len(arr)):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+    return arr
+
+def bubble_sort(arr):
+    for i in range(len(arr)):
+        for j in range(len(arr) - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+percentages = [85.5, 78.0, 92.3, 88.7, 76.4, 95.2, 89.1, 73.5]
+
+sorted_by_selection = selection_sort(percentages.copy())
+sorted_by_bubble = bubble_sort(percentages.copy())
+
+top_five_selection = sorted_by_selection[-5:]
+top_five_bubble = sorted_by_bubble[-5:]
+
+print("Top five scores using Selection Sort:", top_five_selection)
+print("Top five scores using Bubble Sort:", top_five_bubble)
